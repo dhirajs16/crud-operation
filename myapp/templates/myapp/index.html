@@ -1,0 +1,37 @@
+{% extends 'myapp/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="bg-teal-500 rounded-xl px-auto py-3 text-black mb-10">
+    <h1 class="text-center font-semibold text-2xl uppercase">Crud Operations with Model Forms</h1>
+</div>
+<div class="grid grid-cols-3 gap-10 px-7">
+    <div class="col-span-1">
+        <form action="{% url 'index' %}" method="post" class="flex flex-col gap-4">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Add" class="bg-teal-500 rounded-xl px-7 py-2 text-lg text-black">
+        </form>
+    </div>
+    <div class="col-span-2 w-full">
+        <table class="border w-full">
+            <tr class="bg-teal-500  text-center">
+                <th>Title</th>
+                <th>Description</th>
+                <th>Operations</th>
+            </tr>
+            {% for item in items %}
+            <tr class="bg-gray-700 text-center">
+                <td>{{ item.title }}</td>
+                <td>{{ item.description }}</td>
+                <td class="flex justify-center gap-4">
+                    <a href="{% url 'update' item.id %}" class="bg-yellow-500 rounded-lg px-2 text-black">Update</a>
+                    <a href="{% url 'delete' item.id %}" class="bg-red-500 rounded-lg px-2 text-black">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
