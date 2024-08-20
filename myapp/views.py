@@ -9,26 +9,28 @@ def index(request):
     if request.method == "POST":
         form = TodoForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('index')            
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            
+            Todo.objects.create(title = title, description = description)
+            
     else:
         form = TodoForm()
     return render(request, 'myapp/index.html', {'form': form, 'items':items})
 
 
-def update(request, pk):
-    item = get_object_or_404(Todo, pk = pk)
-    if request.method == 'POST':
-        form = TodoForm(request.POST, instance=item)
+def update(request, id):
+    if request.method == "POST":
+        form = TodoForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('index')
-        
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            
+            Todo.objects.filter(id = id).update(title = title, description = description)
     else:
-        form = TodoForm(instance=item)
-        print(form)
-    return render(request, 'myapp/update.html', {'form': form})
-   
-def delete(request, pk):
-    Todo.objects.filter(pk = pk).delete()
-    return redirect('index')
+        item = get_object_or_404(Todo, id=id)
+    return render(request, 'myapp/update.html', { 'item' : item })
+
+def delete(request, id):
+    Todo.objects.filter(id = id).delete()
+    return redirect('/')

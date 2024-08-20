@@ -26,8 +26,8 @@
                 <td>{{ item.title }}</td>
                 <td>{{ item.description }}</td>
                 <td class="flex justify-center gap-4">
-                    <a href="{% url 'update' item.pk %}" class="bg-yellow-500 rounded-lg px-2 text-black">Edit</a>
-                    <a href="{% url 'delete' item.pk %}" class="bg-red-500 rounded-lg px-2 text-black">Delete</a>
+                    <a href="{% url 'update' item.id %}" class="bg-yellow-500 rounded-lg px-2 text-black">Update</a>
+                    <a href="{% url 'delete' item.id %}" class="bg-red-500 rounded-lg px-2 text-black">Delete</a>
                 </td>
             </tr>
             {% endfor %}
